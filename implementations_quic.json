@@ -10,7 +10,7 @@
     "role": "both"
   },
   "mvfst": {
-    "image": "ghcr.io/facebook/proxygen/mvfst-interop:latest",
+    "image": "ghcr.io/meta/proxygen/mvfst-interop:latest",
     "url": "https://github.com/facebookincubator/mvfst",
     "role": "both"
   },
@@ -82,6 +82,11 @@
   "go-x-net": {
     "image": "us-central1-docker.pkg.dev/golang-interop-testing/quic/go-x-net:latest",
     "url": "https://pkg.go.dev/golang.org/x/net/internal/quic",
+    "role": "both"
+  },
+  "rama": {
+    "image": "glendc/rama-quic-interop:edge",
+    "url": "https://github.com/plabayo/rama",
     "role": "both"
   },
   "quicx": {
