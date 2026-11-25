@@ -141,11 +141,17 @@ jobs:
           if [ -f "${{ matrix.client }}.tar.zst" ]; then
             docker load --input ${{ matrix.client }}.tar.zst
           fi
+      # Use the tshark from the Ubuntu archive (>= 4.5 is required, 26.04 ships 4.6).
+      # The wireshark-dev/nightly PPA is flaky (503s) and mixing its 5.x
+      # packages with the archive's 4.6 libraries breaks tshark.
       - name: Install Wireshark
         run: |
-          sudo add-apt-repository ppa:wireshark-dev/nightly
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends tshark
+          for i in 1 2 3; do
+            sudo apt-get update && \
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tshark && break
+            echo "apt failed (attempt $i), retrying..."; sleep 15
+          done
+          tshark --version | head -1
       - name: Install Python packages
         run: |
           pip install -U pip
@@ -237,11 +243,17 @@ jobs:
           docker load --input quic-interop-iperf-endpoint.tar.zst
           docker load --input quicx.tar.zst
           docker load --input ${{ matrix.server }}.tar.zst
+      # Use the tshark from the Ubuntu archive (>= 4.5 is required, 26.04 ships 4.6).
+      # The wireshark-dev/nightly PPA is flaky (503s) and mixing its 5.x
+      # packages with the archive's 4.6 libraries breaks tshark.
       - name: Install Wireshark
         run: |
-          sudo add-apt-repository ppa:wireshark-dev/nightly
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends tshark
+          for i in 1 2 3; do
+            sudo apt-get update && \
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tshark && break
+            echo "apt failed (attempt $i), retrying..."; sleep 15
+          done
+          tshark --version | head -1
       - name: Install Python packages
         run: |
           pip install -U pip
