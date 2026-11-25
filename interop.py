@@ -455,7 +455,7 @@ class InteropRunner:
             )
             output = r.stdout
         except subprocess.TimeoutExpired as ex:
-            output = ex.stdout
+            output = ex.stdout or b""
             expired = True
 
         logging.debug("%s", output.decode("utf-8", errors="replace"))

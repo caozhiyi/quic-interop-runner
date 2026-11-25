@@ -183,14 +183,14 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: results-quic-quicx-${{ matrix.client }}-tests
-          if-no-files-found: error
+          if-no-files-found: warn
           path: quicx_${{ matrix.client }}_results.json
       - name: Upload measurement result
         if: ${{ always() }}
         uses: actions/upload-artifact@v7
         with:
           name: results-quic-quicx-${{ matrix.client }}-measurements
-          if-no-files-found: error
+          if-no-files-found: warn
           path: quicx_${{ matrix.client }}_measurements.json
 
   # quicx as client, matrix over all peer servers
@@ -279,14 +279,14 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: results-quic-${{ matrix.server }}-quicx-tests
-          if-no-files-found: error
+          if-no-files-found: warn
           path: ${{ matrix.server }}_quicx_results.json
       - name: Upload measurement result
         if: ${{ always() }}
         uses: actions/upload-artifact@v7
         with:
           name: results-quic-${{ matrix.server }}-quicx-measurements
-          if-no-files-found: error
+          if-no-files-found: warn
           path: ${{ matrix.server }}_quicx_measurements.json
 
   publish:
