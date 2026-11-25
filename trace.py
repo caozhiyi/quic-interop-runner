@@ -124,7 +124,17 @@ class TraceAnalyzer:
                 packets.append(p)
         except Exception as e:
             logging.debug(e)
-        cap.close()
+        # close() raises TSharkCrashException if tshark exited with a non-zero
+        # code, e.g. on a truncated pcap. The packets read so far are still valid.
+        try:
+            cap.close()
+        except Exception as e:
+            logging.debug("Error closing tshark: %s", e)
+            # avoid the same exception being raised again from Capture.__del__
+            try:
+                cap._running_processes.clear()
+            except Exception:
+                pass
 
         if self._keylog_file is not None:
             for p in packets:
