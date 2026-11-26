@@ -337,7 +337,7 @@ jobs:
             --run-name logs_${{ needs.config.outputs.logname }} \
             --result result.json \
             --site-dir website \
-            --keep-runs 30
+            --keep-runs 5
       - name: Commit and push
         run: |
           cd website

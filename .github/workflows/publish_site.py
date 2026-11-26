@@ -15,7 +15,7 @@ and the viewer only consumes the aggregated pass/fail matrix.
 
 Usage:
     python publish_site.py --run-name logs_2026-10-16T03:30 \
-        --result result.json --site-dir website --keep-runs 30
+        --result result.json --site-dir website --keep-runs 5
 """
 import argparse
 import json
@@ -31,7 +31,7 @@ def get_args():
                         help="path to the aggregated result.json")
     parser.add_argument("--site-dir", required=True,
                         help="path to the caozhiyi.github.io checkout")
-    parser.add_argument("--keep-runs", type=int, default=30,
+    parser.add_argument("--keep-runs", type=int, default=5,
                         help="number of runs to keep on the site")
     return parser.parse_args()
 
